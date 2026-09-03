@@ -11,7 +11,9 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Tap local formula
-        run: brew tap stonianua/neither "${{ github.workspace }}"
+        run: |
+          brew tap stonianua/neither "${{ github.workspace }}"
+          brew trust stonianua/neither
 
       - name: Install neither from formula
         run: brew install --verbose stonianua/neither/neither

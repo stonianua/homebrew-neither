@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  macos-brew-install:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install neither from formula
+        run: brew install --verbose --formula ./Formula/neither.rb
+
+      - name: Verify neither version
+        run: |
+          neither --version | tee /tmp/neither-version.txt
+          grep -q '0.1.1' /tmp/neither-version.txt
+
+      - name: Run brew test
+        run: brew test neither
+
+      - name: Audit formula (non-blocking)
+        continue-on-error: true
+        run: brew audit --formula ./Formula/neither.rb

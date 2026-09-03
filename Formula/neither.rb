@@ -5,14 +5,14 @@ class Neither < Formula
   sha256 "f57f345ae94f0b139729a5305b6fbaa7da2c6d0b84ce18afd6b6c6160ed0ecd2"
   license "MIT"
 
-  depends_on "node@20"
+  depends_on "node@18"
 
   def install
     system "npm", "install", *std_npm_args
     libexec.glob("bin/*").each do |path|
       name = path.basename
       rm_f bin/name
-      (bin/name).write_env_script path, PATH: "#{Formula["node@20"].opt_bin}:$PATH"
+      (bin/name).write_env_script path, PATH: "#{Formula["node@18"].opt_bin}:$PATH"
     end
   end
 

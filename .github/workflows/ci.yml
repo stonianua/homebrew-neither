@@ -10,8 +10,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Tap local formula
+        run: brew tap stonianua/neither "${{ github.workspace }}"
+
       - name: Install neither from formula
-        run: brew install --verbose --formula ./Formula/neither.rb
+        run: brew install --verbose stonianua/neither/neither
 
       - name: Verify neither version
         run: |
@@ -19,8 +22,8 @@ jobs:
           grep -q '0.1.1' /tmp/neither-version.txt
 
       - name: Run brew test
-        run: brew test neither
+        run: brew test stonianua/neither/neither
 
       - name: Audit formula (non-blocking)
         continue-on-error: true
-        run: brew audit --formula ./Formula/neither.rb
+        run: brew audit stonianua/neither/neither
